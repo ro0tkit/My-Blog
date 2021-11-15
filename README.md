@@ -32,7 +32,7 @@ This  is a flask application that allows writers to post blogs, edit and delite 
 ## Development Installation
 To get the code..
 
-1. Cloning the repository:git clone repository l
+1. Cloning the repository:git clone repository li
  
 2. Move to the folder and install requirements
   ```bash
