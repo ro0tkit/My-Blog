@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      {% if title %}
+      <title> {{ title }}</title>
+      {% else %}
+      <title> </title>
+     
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Gluten:wght@600&family=Kalam&display=swap" rel="stylesheet">
+      {% endif %}
+    </head>
+    <style>
+      
+      body{
+        background-color: #590d22;
+        background-attachment:fixed;
+        background-size: cover;
+        background-position: 100%;
+        font-family: 'Gluten', cursive;
+        font-family: 'Kalam', cursive;
+        
+        width: 100%;
+        height: 100%;
+       }
+       #quote{
+         font-size: 35px;
+         font-family: "Lucida Console", "Courier New", monospace;
+         color: bisque;
+         
+
+       }
+       .jumbotron{
+         opacity: 0.6;
+       }
+       #quoteauthor{
+         float: left;
+         font-style: italic;
+         color: bisque;
+       }
+       .well{
+         opacity:0.7;
+       }
+       button{
+       
+         height: 50px;
+         width: 100px;
+         margin-top: 5rem;
+       }
+       a{
+         color: black;
+         
+       }
+       .panel{
+         opacity: 0.7;
+       }
+       #content{
+         font-size:25px
+       }
+       #articletitle{
+         font-size:30px
+       }
+     </style>
+     <body>
+       <div class="conteiner">
+<div class="card">
+  <div class="col-sm-9">
+    <p id="quote"><strong>{{quote}}</strong></p> 
+    <p class="font"id="quoteauthor">{{quote_author}}</p>
+  </div>
+<div class="text-center" id="button">
+<button class="btn btn-primary"><a href="{{url_for('main.post')}}" >New Blog</a></button>
+</div>
+<br>
+
+
+{% for article in articles  %}
+<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+    <div class="panel">
+    <div class="panel-body">
+        <h2 id="articletitle">{{ article.title }}</h2>
+        <p id="content">{{ article.content }}</p>
+        
+        <blockquote >
+          <footer>Posted by:
+            <cite > {{ article.author.current_user}}</cite>
+            on
+            <cite > {{ article.date_posted.strftime('%Y-%m-%d')}}</cite>
+          </footer>
+        </blockquote>
+        <div class="text-center">
+        <a href="/review/{{article.id}}" class="btn btn-primary">Add Comment</a>
+        
+      </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+
+</body>
+{% endblock %}
+</html>

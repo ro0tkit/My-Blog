@@ -1,0 +1,87 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      {% if title %}
+      <title> {{ title }}</title>
+      {% else %}
+      <title> Home for stories </title>
+     
+      {% endif %}
+    </head>
+    <style>
+      body{
+        background-image :url('https://images.pexels.com/photos/935871/pexels-photo-935871.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=1000');
+        font-family: 'Cormorant Garamond', serif;
+        font-weight: 600;
+        font-size: 25px;
+       }
+     </style>
+     <body>
+<div class="container">
+<div class="row">
+<!-- displaying  Username-->
+  <div class="col-md-4">
+    <h3> {{user.username| capitalize}} </h3>
+
+    <!--Displaying user bio-->
+    {% if user.bio %}
+      <p> {{user.bio}}</p>
+    {%else%}
+      <p> {{user.username| capitalize}} has no bio </p>
+    {% endif %}
+  </div>
+
+  <!--Display profile photo-->
+  <div class="col-md-4">
+
+    {% if user.profile_pic_path %}
+    <img src="{{url_for('static',filename=user.profile_pic_path)}}" alt="" class="img-thumbnail">
+    {%else%}
+    <p>No profile picture</p>
+    {% endif %}
+  </div>
+  <div class="text-center">
+    <div class="container-fluid">
+        <h4>Change photo here</h4>
+    <div class="card">
+    {% if user == current_user %}
+    <form id="form" action="{{url_for('main.update_pic',uname=user.username)}}" method="post" enctype = "multipart/form-data">
+      <input type="file"  name="photo" class="form-control" required><br>
+      <input type="submit">
+    </form>
+    </div>
+   <center><a href="{{url_for('main.update_profile',uname=user.username)}}">Edit profile</a></center>
+    </div><br><br>
+      {% endif %}
+    </div>
+    {% for article  in articles %}
+    <div class="row">
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+         <div class="panel">
+         <div class="panel-body">
+             <h2>{{ article.title }}</h2>
+             <p>{{ article.content}}</p>
+              
+             <blockquote >
+               <footer>Posted by:
+                 <cite > {{ article.user.username}}</cite>
+                 on
+                 <cite > {{ article.posted.strftime('%Y-%m-%d')}}</cite>
+               </footer>
+             </blockquote>
+             <div class="text-center">
+             <a href="/new_review/{{article.id}}" class="btn btn-primary">Comment</a>
+           </div>
+           </div>
+         </div>
+       </div>
+     {% endfor %}
+  
+  </div>
+</body>
+{% endblock %}
+</html>
